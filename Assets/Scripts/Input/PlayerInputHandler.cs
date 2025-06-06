@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,7 @@ public class PlayerInputHandler : MonoBehaviour
     /// Reference to the C# wrapper class created as an instance at runtime to access the InputSystems actions maps.
     /// </summary>
     public InputSystem_Actions InputActions
-    {  get; private set; }
+    { get; private set; }
 
     /// <summary>
     /// Reference to the Player actions as defined in the InputSystemActionAsset.
@@ -21,6 +22,11 @@ public class PlayerInputHandler : MonoBehaviour
     [field: SerializeField]
     public StateManager_Player PlayerStateManager
     { get; private set; }
+
+    [field: SerializeField]
+    public Vector2 InputMovement
+    { get; private set; }
+
 
     void Awake()
     {
@@ -39,38 +45,17 @@ public class PlayerInputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Read the movement input as a Vector2 to access 2D direction of movement.
+        InputMovement = InputActions_PlayerActionMap.Move.ReadValue<Vector2>();
     }
 
     public void OnEnable()
     {
         InputActions_PlayerActionMap.Enable();
-
-        InputActions_PlayerActionMap.Move.performed += OnMovement;
-        InputActions_PlayerActionMap.Move.canceled += OnMovement;
     }
 
     public void OnDisable()
     {
         InputActions_PlayerActionMap.Disable();
-
-        InputActions_PlayerActionMap.Move.performed -= OnMovement;
-        InputActions_PlayerActionMap.Move.canceled -= OnMovement;
-    }
-
-    public void OnMovement(InputAction.CallbackContext context)
-    {
-        Vector2 movementDirection = context.ReadValue<Vector2>();
-
-        if (context.performed)
-        {
-            PlayerStateManager.SwitchState(PlayerStateManager.CurrentMovementState, PlayerStateManager.MovementStateInstances.WalkingState);
-        }
-        else if (context.canceled)
-        {
-            PlayerStateManager.SwitchState(PlayerStateManager.CurrentMovementState, PlayerStateManager.MovementStateInstances.IdleState);
-        }
-
-        Debug.Log($"Movement Input: {movementDirection}");
     }
 }

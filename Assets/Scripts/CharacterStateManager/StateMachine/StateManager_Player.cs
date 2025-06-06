@@ -10,9 +10,6 @@ public class StateManager_Player : StateManager
     public PlayerInputHandler InputHandler
     { get; private set; }
 
-    public Vector3 Velocity
-    { get; private set; }
-
     protected override void Awake()
     {
         base.Awake();
@@ -27,6 +24,19 @@ public class StateManager_Player : StateManager
             else
             {
                 Debug.LogError("Unable to locate a character controller on the same gameobject as the state manager.");
+            }
+        }
+
+        // Locate the InputHandler script if it is missing.
+        if (InputHandler == null)
+        {
+            if (TryGetComponent<PlayerInputHandler>(out PlayerInputHandler playerInputHandler))
+            {
+                InputHandler = playerInputHandler;
+            }
+            else
+            {
+                Debug.LogError("Unable to locate a PlayerInputHandler on the same gameobject as the state manager.");
             }
         }
     }
@@ -49,28 +59,5 @@ public class StateManager_Player : StateManager
     protected override void LateUpdate()
     {
         base.LateUpdate();
-
-        CalculateAndApplyVelocity();
-    }
-
-    public void CalculateAndApplyVelocity()
-    {
-        ApplyGravity();
-        Controller.Move(Velocity);
-    }
-
-    public void AdjustVelocity(bool hardSet, Vector3 velocityChange)
-    {
-        if (hardSet)
-        {
-            Velocity = Vector3.zero;
-        }
-
-        Velocity += velocityChange;
-    }
-
-    public void ApplyGravity()
-    {
-
     }
 }

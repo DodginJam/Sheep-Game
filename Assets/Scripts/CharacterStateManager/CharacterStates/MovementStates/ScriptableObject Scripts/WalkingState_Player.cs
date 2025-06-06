@@ -20,7 +20,17 @@ public class WalkingState_Player : WalkingState
 
         if (stateManager is StateManager_Player stateManager_Player)
         {
+            // Switch the state back to idel if the movement has reduced to around zero.
+            if (stateManager_Player.InputHandler.InputMovement.sqrMagnitude < 0.1f)
+            {
+                stateManager_Player.SwitchMovementState(stateManager_Player.MovementStateInstances.IdleState);
+            }
+            else
+            {
+                Vector3 movementDirection = new Vector3(stateManager_Player.InputHandler.InputMovement.x, 0, stateManager_Player.InputHandler.InputMovement.y);
 
+                stateManager_Player.Controller.Move(Time.deltaTime * MovementSpeedModifier * stateManager_Player.CharacterValues.BaseMovementSpeed * movementDirection);
+            }
         }
     }
 

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class MovementBaseState : BaseState
 {
+    public float BaseGravity
+    { get; set; } = -9.81f;
+
     [field: SerializeField]
     public float MovementSpeedModifier
     { get; private set; } = 1.0f;

@@ -43,12 +43,30 @@ public class StateManager : MonoBehaviour
     public ActionStates ActionStateInstances
     { get; private set; }
 
+    /// <summary>
+    /// The values of the character associated with movement etc.
+    /// </summary>
+    [field: SerializeField]
+    public CharacterValues CharacterValues
+    { get; private set; }
 
     protected virtual void Awake()
     {
         // Ensure the current state are assigned a default starting value.
         CurrentMovementState = StartingStateEntry(CurrentMovementState, MovementStateInstances.IdleState);
         CurrentActionState = StartingStateEntry(CurrentActionState, ActionStateInstances.NoActionState);
+
+        if (CharacterValues == null)
+        {
+            if (TryGetComponent<CharacterValues>(out CharacterValues characterValues))
+            {
+                CharacterValues = characterValues;
+            }
+            else
+            {
+                Debug.LogError("Unable to locate the character values on the same gameobject as the state manager.");
+            }
+        }
     }
 
     protected virtual void Start()
@@ -76,8 +94,7 @@ public class StateManager : MonoBehaviour
             Debug.LogError("The StateManager does not have an assigned Action state.");
         }
 
-
-        Debug.Log($"Current MovementState: {CurrentMovementState}\tCurrentActionState: {CurrentActionState}");
+        Debug.Log($"Current Movement State {CurrentMovementState}");
     }
 
     protected virtual void FixedUpdate()
@@ -123,20 +140,37 @@ public class StateManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Used to change the current active state to a new provided state.
+    /// Used to change the current Movement state to a new provided state.
     /// </summary>
     /// <param name="stateToChange"></param>
     /// <param name="newState"></param>
-    public void SwitchState<T>(T stateToChange, T newState) where T : BaseState
+    public void SwitchMovementState(MovementBaseState newState)
     {
-        if (stateToChange != null)
+        if (CurrentMovementState != null)
         {
-            stateToChange.ExitState(this);
+            CurrentMovementState.ExitState(this);
         }
 
-        stateToChange = newState;
+        CurrentMovementState = newState;
 
-        stateToChange.EnterState(this);
+        CurrentMovementState.EnterState(this);
+    }
+
+    /// <summary>
+    /// Used to change the current Action state to a new provided state.
+    /// </summary>
+    /// <param name="stateToChange"></param>
+    /// <param name="newState"></param>
+    public void SwitchActionState(ActionBaseState newState)
+    {
+        if (CurrentActionState != null)
+        {
+            CurrentActionState.ExitState(this);
+        }
+
+        CurrentActionState = newState;
+
+        CurrentActionState.EnterState(this);
     }
 
     /// <summary>

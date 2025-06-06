@@ -11,7 +11,7 @@ public class IdleState_Player : IdleState
 
         if (stateManager is StateManager_Player stateManager_Player)
         {
-
+            stateManager_Player.Controller.Move(Vector3.zero);
         }
     }
 
@@ -21,7 +21,11 @@ public class IdleState_Player : IdleState
 
         if (stateManager is StateManager_Player stateManager_Player)
         {
-
+            // Switch the state back to walking if the movement has increased above zero.
+            if (stateManager_Player.InputHandler.InputMovement.sqrMagnitude >= 0.1f)
+            {
+                stateManager_Player.SwitchMovementState(stateManager_Player.MovementStateInstances.WalkingState);
+            }
         }
     }
 
