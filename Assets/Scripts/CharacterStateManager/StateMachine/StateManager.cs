@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class StateManager : MonoBehaviour
@@ -8,11 +9,20 @@ public class StateManager : MonoBehaviour
     public MovementBaseState CurrentMovementState
     {  get; private set; }
 
-    /// <summary>
-    /// The array of the movement states the state machine can access.
-    /// </summary>
-    [field: SerializeField]
-    public MovementBaseState[] MovementStates
+    [Serializable]
+    public class MovementStates
+    {
+        [field: SerializeField]
+        public IdleState IdleState
+        { get; private set; }
+
+        [field: SerializeField]
+        public WalkingState WalkingState
+        { get; private set; }
+    }
+
+    [field: SerializeField, Header("Movement States")]
+    public MovementStates MovementStateInstances
     { get; private set; }
 
     /// <summary>
@@ -21,26 +31,56 @@ public class StateManager : MonoBehaviour
     public ActionBaseState CurrentActionState
     { get; private set; }
 
-    /// <summary>
-    /// The array of action state the state machine can access.
-    /// </summary>
-    [field: SerializeField]
-    public ActionBaseState[] ActionStates
+    [Serializable]
+    public class ActionStates
+    {
+        [field: SerializeField]
+        public NoAction NoActionState
+        { get; private set; }
+    }
+
+    [field: SerializeField, Header("Action States")]
+    public ActionStates ActionStateInstances
     { get; private set; }
 
-    private void Awake()
+
+    protected virtual void Awake()
     {
         // Ensure the current state are assigned a default starting value.
-        CurrentMovementState = StartingStateEntry(CurrentMovementState, MovementStates);
-        CurrentActionState = StartingStateEntry(CurrentActionState, ActionStates);
+        CurrentMovementState = StartingStateEntry(CurrentMovementState, MovementStateInstances.IdleState);
+        CurrentActionState = StartingStateEntry(CurrentActionState, ActionStateInstances.NoActionState);
     }
 
-    void Start()
+    protected virtual void Start()
     {
 
     }
 
-    void Update()
+    protected virtual void Update()
+    {
+        if (CurrentMovementState != null)
+        {
+            CurrentMovementState.UpdateState(this);
+        }
+        else
+        {
+            Debug.LogError("The StateManager does not have an assigned Movement state.");
+        }
+
+        if (CurrentActionState != null)
+        {
+            CurrentActionState.UpdateState(this);
+        }
+        else
+        {
+            Debug.LogError("The StateManager does not have an assigned Action state.");
+        }
+
+
+        Debug.Log($"Current MovementState: {CurrentMovementState}\tCurrentActionState: {CurrentActionState}");
+    }
+
+    protected virtual void FixedUpdate()
     {
         if (CurrentMovementState != null)
         {
@@ -61,28 +101,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (CurrentMovementState != null)
-        {
-            CurrentMovementState.UpdateState(this);
-        }
-        else
-        {
-            Debug.LogError("The StateManager does not have an assigned Movement state.");
-        }
-
-        if (CurrentActionState != null)
-        {
-            CurrentActionState.UpdateState(this);
-        }
-        else
-        {
-            Debug.LogError("The StateManager does not have an assigned Action state.");
-        }
-    }
-
-    private void LateUpdate()
+    protected virtual void LateUpdate()
     {
         if (CurrentMovementState != null)
         {
@@ -108,9 +127,12 @@ public class StateManager : MonoBehaviour
     /// </summary>
     /// <param name="stateToChange"></param>
     /// <param name="newState"></param>
-    public void SwitchState(BaseState stateToChange, BaseState newState)
+    public void SwitchState<T>(T stateToChange, T newState) where T : BaseState
     {
-        stateToChange.ExitState(this);
+        if (stateToChange != null)
+        {
+            stateToChange.ExitState(this);
+        }
 
         stateToChange = newState;
 
@@ -122,17 +144,17 @@ public class StateManager : MonoBehaviour
     /// </summary>
     /// <param name="stateToAssign"></param>
     /// <param name="stateList"></param>
-    public T StartingStateEntry<T>(T stateToAssign, T[] stateList) where T : BaseState
+    public T StartingStateEntry<T>(T stateToAssign, T entryState) where T : BaseState
     {
         if (stateToAssign == null)
         {
-            if (stateList != null && stateList.Length > 0 && stateList[0] != null)
+            if (entryState != null)
             {
-                return stateList[0];
+                return entryState;
             }
             else
             {
-                Debug.LogError("No valid starting state able to be found through the provided state list.");
+                Debug.LogError("Entry state is not a valid reference - is null.");
                 return default(T);
             }
         }

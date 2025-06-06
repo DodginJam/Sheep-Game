@@ -2,27 +2,27 @@ using UnityEngine;
 
 public abstract class BaseState : ScriptableObject
 {
-    public virtual void EnterState(StateManager stateManager)
+    public virtual void EnterState<T>(T stateManager) where T : StateManager
     {
 
     }
 
-    public virtual void UpdateState(StateManager stateManager)
+    public virtual void UpdateState<T>(T stateManager) where T : StateManager
     {
 
     }
 
-    public virtual void FixedUpdateState(StateManager stateManager)
+    public virtual void FixedUpdateState<T>(T stateManager) where T : StateManager
     {
 
     }
 
-    public virtual void LateUpdateState(StateManager stateManager)
+    public virtual void LateUpdateState<T>(T stateManager) where T : StateManager
     {
 
     }
 
-    public virtual void ExitState(StateManager stateManager)
+    public virtual void ExitState<T>(T stateManager) where T : StateManager
     {
         
     }

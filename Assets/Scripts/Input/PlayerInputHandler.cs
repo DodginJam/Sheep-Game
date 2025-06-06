@@ -15,6 +15,13 @@ public class PlayerInputHandler : MonoBehaviour
     public InputSystem_Actions.PlayerActions InputActions_PlayerActionMap
     { get; private set; }
 
+    /// <summary>
+    /// The state manager that the inputs should be sent to for access to it's various states and componments.
+    /// </summary>
+    [field: SerializeField]
+    public StateManager_Player PlayerStateManager
+    { get; private set; }
+
     void Awake()
     {
         InputActions = new InputSystem_Actions();
@@ -38,10 +45,32 @@ public class PlayerInputHandler : MonoBehaviour
     public void OnEnable()
     {
         InputActions_PlayerActionMap.Enable();
+
+        InputActions_PlayerActionMap.Move.performed += OnMovement;
+        InputActions_PlayerActionMap.Move.canceled += OnMovement;
     }
 
     public void OnDisable()
     {
         InputActions_PlayerActionMap.Disable();
+
+        InputActions_PlayerActionMap.Move.performed -= OnMovement;
+        InputActions_PlayerActionMap.Move.canceled -= OnMovement;
+    }
+
+    public void OnMovement(InputAction.CallbackContext context)
+    {
+        Vector2 movementDirection = context.ReadValue<Vector2>();
+
+        if (context.performed)
+        {
+            PlayerStateManager.SwitchState(PlayerStateManager.CurrentMovementState, PlayerStateManager.MovementStateInstances.WalkingState);
+        }
+        else if (context.canceled)
+        {
+            PlayerStateManager.SwitchState(PlayerStateManager.CurrentMovementState, PlayerStateManager.MovementStateInstances.IdleState);
+        }
+
+        Debug.Log($"Movement Input: {movementDirection}");
     }
 }

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2743164478902626102}
-  - component: {fileID: 870513788289352103}
-  - component: {fileID: 6209351871891142311}
+  - component: {fileID: 1437242390953001880}
+  - component: {fileID: 7066138807043042178}
   - component: {fileID: 596653967906289654}
   - component: {fileID: 5413632145213499706}
   - component: {fileID: 6127389057723500722}
@@ -37,7 +37,7 @@ Transform:
   - {fileID: 4305342198820754998}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &870513788289352103
+--- !u!114 &1437242390953001880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,9 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9dfbd7709ba34747a3dc4882f2481a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Controller>k__BackingField: {fileID: 6127389057723500722}
   <BaseMovementSpeed>k__BackingField: 5
---- !u!114 &6209351871891142311
+--- !u!114 &7066138807043042178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,14 +59,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2101633315672321421}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d967bc2428662a48ab5bb850d41896b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6931cba028302d645ba5f17e5f084ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MovementStates>k__BackingField:
-  - {fileID: 11400000, guid: 7f2742111c8e4084da88a44daf560072, type: 2}
-  - {fileID: 11400000, guid: 7f2742111c8e4084da88a44daf560072, type: 2}
-  <ActionStates>k__BackingField:
-  - {fileID: 11400000, guid: 189962bd5bebd6746827e1d9faadb632, type: 2}
+  <MovementStateInstances>k__BackingField:
+    <IdleState>k__BackingField: {fileID: 11400000, guid: 7f2742111c8e4084da88a44daf560072, type: 2}
+    <WalkingState>k__BackingField: {fileID: 11400000, guid: 334deb9e00e23f240a0a0e6d99492f59, type: 2}
+  <ActionStateInstances>k__BackingField:
+    <NoActionState>k__BackingField: {fileID: 11400000, guid: 189962bd5bebd6746827e1d9faadb632, type: 2}
+  <Controller>k__BackingField: {fileID: 6127389057723500722}
+  <InputHandler>k__BackingField: {fileID: 596653967906289654}
 --- !u!114 &596653967906289654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f746a883e2edd1478cb760bf830dde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PlayerStateManager>k__BackingField: {fileID: 7066138807043042178}
 --- !u!114 &5413632145213499706
 MonoBehaviour:
   m_ObjectHideFlags: 0

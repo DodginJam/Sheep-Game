@@ -6,27 +6,27 @@ public class MovementBaseState : BaseState
     public float MovementSpeedModifier
     { get; private set; } = 1.0f;
 
-    public override void EnterState(StateManager stateManager)
+    public override void EnterState<T>(T stateManager)
     {
         base.EnterState(stateManager);
     }
 
-    public override void UpdateState(StateManager stateManager)
+    public override void UpdateState<T>(T stateManager)
     {
         base.UpdateState(stateManager);
     }
 
-    public override void FixedUpdateState(StateManager stateManager)
+    public override void FixedUpdateState<T>(T stateManager)
     {
         base.FixedUpdateState(stateManager);
     }
 
-    public override void LateUpdateState(StateManager stateManager)
+    public override void LateUpdateState<T>(T stateManager)
     {
         base.LateUpdateState(stateManager);
     }
 
-    public override void ExitState(StateManager stateManager)
+    public override void ExitState<T>(T stateManager)
     {
         base.ExitState(stateManager);
     }
