@@ -31,6 +31,9 @@ public class WalkingState_Player : WalkingState
 
                 stateManager_Player.Controller.Move(Time.deltaTime * MovementSpeedModifier * stateManager_Player.CharacterValues.BaseMovementSpeed * movementDirection);
             }
+
+            // Handle Rotation.
+            RotateToDirectionOfMovement(stateManager.gameObject, stateManager_Player.Controller.velocity.normalized, stateManager_Player);
         }
     }
 

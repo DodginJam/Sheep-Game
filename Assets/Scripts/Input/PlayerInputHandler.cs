@@ -23,6 +23,9 @@ public class PlayerInputHandler : MonoBehaviour
     public StateManager_Player PlayerStateManager
     { get; private set; }
 
+    /// <summary>
+    /// The reference of the Horizontal and Vertical movement float values as read from the input system.
+    /// </summary>
     [field: SerializeField]
     public Vector2 InputMovement
     { get; private set; }
@@ -30,8 +33,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     void Awake()
     {
+        // Nullcheck for InputActions.
         InputActions = new InputSystem_Actions();
-
         if (InputActions != null)
         {
             InputActions_PlayerActionMap = InputActions.Player;

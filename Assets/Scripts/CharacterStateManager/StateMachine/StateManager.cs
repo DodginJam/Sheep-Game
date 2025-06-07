@@ -9,18 +9,9 @@ public class StateManager : MonoBehaviour
     public MovementBaseState CurrentMovementState
     {  get; private set; }
 
-    [Serializable]
-    public class MovementStates
-    {
-        [field: SerializeField]
-        public IdleState IdleState
-        { get; private set; }
-
-        [field: SerializeField]
-        public WalkingState WalkingState
-        { get; private set; }
-    }
-
+    /// <summary>
+    /// Instance of the MovementStates containing list of the scriptable objects.
+    /// </summary>
     [field: SerializeField, Header("Movement States")]
     public MovementStates MovementStateInstances
     { get; private set; }
@@ -31,14 +22,9 @@ public class StateManager : MonoBehaviour
     public ActionBaseState CurrentActionState
     { get; private set; }
 
-    [Serializable]
-    public class ActionStates
-    {
-        [field: SerializeField]
-        public NoAction NoActionState
-        { get; private set; }
-    }
-
+    /// <summary>
+    /// Instance of the ActionStates containing list of the scriptable objects.
+    /// </summary>
     [field: SerializeField, Header("Action States")]
     public ActionStates ActionStateInstances
     { get; private set; }
@@ -56,6 +42,7 @@ public class StateManager : MonoBehaviour
         CurrentMovementState = StartingStateEntry(CurrentMovementState, MovementStateInstances.IdleState);
         CurrentActionState = StartingStateEntry(CurrentActionState, ActionStateInstances.NoActionState);
 
+        // Reference to the CharacterValues script check.
         if (CharacterValues == null)
         {
             if (TryGetComponent<CharacterValues>(out CharacterValues characterValues))
@@ -197,5 +184,31 @@ public class StateManager : MonoBehaviour
             Debug.Log("State has already been assigned, no need to assign reference.");
             return default(T);
         }
+    }
+
+    /// <summary>
+    /// Class containing references to the movement states scriptable objects.
+    /// </summary>
+    [Serializable]
+    public class MovementStates
+    {
+        [field: SerializeField]
+        public IdleState IdleState
+        { get; private set; }
+
+        [field: SerializeField]
+        public WalkingState WalkingState
+        { get; private set; }
+    }
+
+    /// <summary>
+    /// Class containing references to the action states scriptable objects.
+    /// </summary>
+    [Serializable]
+    public class ActionStates
+    {
+        [field: SerializeField]
+        public NoAction NoActionState
+        { get; private set; }
     }
 }

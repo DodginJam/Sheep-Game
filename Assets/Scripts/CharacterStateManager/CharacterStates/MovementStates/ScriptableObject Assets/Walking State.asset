@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Walking State
   m_EditorClassIdentifier: 
   <MovementSpeedModifier>k__BackingField: 1
+  <RotateToMovementDirectionAllowed>k__BackingField: 1
