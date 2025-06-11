@@ -2,26 +2,44 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [field: SerializeField]
+    /// <summary>
+    /// The camera used by the player to see the scene during gameplay.
+    /// </summary>
+    [field: SerializeField, Header("Camera and Target")]
     public Camera PlayerCamera
     {  get; private set; }
 
+    /// <summary>
+    /// The gameobject that is assigned to the camera as the target to follow.
+    /// </summary>
     [field: SerializeField]
     public GameObject AssignedTarget
     { get; private set; }
 
+    /// <summary>
+    /// The position of the target from the last frame.
+    /// </summary>
     public Vector3 LastFrameTargetPosition
     { get; private set; }
 
+    /// <summary>
+    /// The camera positional offset from the assigned target - used to maintain camera distance from target.
+    /// </summary>
     [field: SerializeField]
     public Vector3 CameraPositionalOffset
     { get; private set; }
 
+    /// <summary>
+    /// The cameras rotation maintained during gameplay.
+    /// </summary>
     [field: SerializeField]
     public Vector3 CameraRotation
     { get; private set; }
 
-    [field: SerializeField]
+    /// <summary>
+    /// The base speed of movement the camera has when moving towards the players direction of movement.
+    /// </summary>
+    [field: SerializeField, Header("Camera Movement")]
     public float CameraLerpSpeed
     { get; private set; } = 5.0f;
 

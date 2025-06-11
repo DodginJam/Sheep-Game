@@ -48,8 +48,7 @@ MonoBehaviour:
   <AssignedTarget>k__BackingField: {fileID: 0}
   <CameraPositionalOffset>k__BackingField: {x: 0, y: 15, z: -20}
   <CameraRotation>k__BackingField: {x: 40, y: 0, z: 0}
-  <CameraLerpSpeed>k__BackingField: 30
-  <Viewport_CentreDistanceToLerp>k__BackingField: 0.25
-  <DistanceToStopLerp>k__BackingField: 0.1
+  <CameraLerpSpeed>k__BackingField: 25
+  <Viewport_CentreDistanceToLerp>k__BackingField: 0.125
+  <DistanceToStopLerp>k__BackingField: 0.01
   <ProjectedLerpDistanceFromPlayerMovement>k__BackingField: 5
-  <TimeUntilCameraResetWhenStationary>k__BackingField: 1
