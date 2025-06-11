@@ -68,6 +68,6 @@ public class MovementBaseState : BaseState
         }
 
         Vector3 newRotation = Vector3.RotateTowards(objectToRotate.transform.forward, directionOfMovement.normalized, RotationSpeedModifier * Time.deltaTime * stateManager.CharacterValues.BaseRotationSpeed, 0.0f);
-        objectToRotate.transform.rotation = Quaternion.LookRotation(newRotation);
+        objectToRotate.transform.rotation = Quaternion.LookRotation(newRotation, Vector3.up);
     }
 }

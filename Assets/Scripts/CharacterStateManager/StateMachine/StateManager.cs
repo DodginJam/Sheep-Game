@@ -32,7 +32,7 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// The values of the character associated with movement etc.
     /// </summary>
-    [field: SerializeField]
+    [field: SerializeField, Header("Character Values")]
     public CharacterValues CharacterValues
     { get; private set; }
 
@@ -81,7 +81,7 @@ public class StateManager : MonoBehaviour
             Debug.LogError("The StateManager does not have an assigned Action state.");
         }
 
-        Debug.Log($"Current Movement State {CurrentMovementState}");
+        // Debug.Log($"Current Movement State {CurrentMovementState}");
     }
 
     protected virtual void FixedUpdate()
