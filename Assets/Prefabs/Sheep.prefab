@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2373901587882492910}
   - component: {fileID: 5014000434319080899}
   - component: {fileID: 5311447465541161023}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 2473971006559639768}
   - component: {fileID: 3287054953148784388}
   - component: {fileID: 9168870439389660338}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 2120284013810611913}
   - component: {fileID: 6092906339988238725}
   - component: {fileID: 1476500609594589571}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sheep
   m_TagString: Untagged
   m_Icon: {fileID: 0}

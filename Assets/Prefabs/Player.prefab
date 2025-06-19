@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 596653967906289654}
   - component: {fileID: 5413632145213499706}
   - component: {fileID: 6127389057723500722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 3478643878281994786}
   - component: {fileID: 5308687760253578800}
   - component: {fileID: 2928013179641431997}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 4305342198820754998}
   - component: {fileID: 2069428928477449275}
   - component: {fileID: 3388584987856030631}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
