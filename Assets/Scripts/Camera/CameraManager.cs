@@ -157,6 +157,7 @@ public class CameraManager : MonoBehaviour
         {
             float viewportCentre = 0.5f;
 
+            // Checks the mouse position of the user and adds it's position, if outside the deadzone, to the cameraPositionToMoveToo list.
             MouseDeadZoneCheck();
 
             // If the player is outside the bounds of the given viewport view bounds, then change the camera movement status to moving towards the player.
@@ -179,6 +180,7 @@ public class CameraManager : MonoBehaviour
             // Update the calculated camera position to the current lerped positions between thw cameras current position and the projected target position.
             cameraPositionToMoveToo.Add(projectedTargetPosition + CameraPositionalOffset);
 
+            // Checks the mouse position of the user and adds it's position, if outside the deadzone, to the cameraPositionToMoveToo list.
             MouseDeadZoneCheck();
 
             // The camera only resets to the centered type movement when the player has stopped moving.
