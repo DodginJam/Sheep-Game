@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using static UnityEngine.GraphicsBuffer;
 
 public class CameraManager : MonoBehaviour
 {
@@ -145,8 +147,8 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     public void UpdateCameraPosition()
     {
-        // The Vector3 position that the MoveTowards is to be assigend to is referenced here before being assigned to CalculatedCameraPosition.
-        Vector3 cameraPositionToMoveToo = Vector3.zero;
+        // The Vector3 positions that the MoveTowards is to use the averaged position.
+        List<Vector3> cameraPositionToMoveToo = new List<Vector3>();
 
         Vector3 playerViewportPosition = PlayerCamera.WorldToViewportPoint(AssignedTarget.transform.position);
 
@@ -175,7 +177,7 @@ public class CameraManager : MonoBehaviour
             Vector3 projectedTargetPosition = AssignedTarget.transform.position + (targetDirectionOfMovement * ProjectedLerpDistanceFromPlayerMovement);
 
             // Update the calculated camera position to the current lerped positions between thw cameras current position and the projected target position.
-            cameraPositionToMoveToo = projectedTargetPosition + CameraPositionalOffset;
+            cameraPositionToMoveToo.Add(projectedTargetPosition + CameraPositionalOffset);
 
             MouseDeadZoneCheck();
 
@@ -194,8 +196,16 @@ public class CameraManager : MonoBehaviour
             }
         }
 
+        // Calculate the average camera position from the list of positions.
+        Vector3 averageCameraPosition = Vector3.zero;
+        foreach (Vector3 position in cameraPositionToMoveToo)
+        {
+            averageCameraPosition += position;
+        }
+        averageCameraPosition /= cameraPositionToMoveToo.Count;
+
         // Calculate the new camera position and then assigned the PlayerCamera to that position.
-        CalculatedCameraPosition = Vector3.MoveTowards(PlayerCamera.transform.position, cameraPositionToMoveToo, CameraLerpSpeed * Time.deltaTime);
+        CalculatedCameraPosition = Vector3.MoveTowards(PlayerCamera.transform.position, averageCameraPosition, CameraLerpSpeed * Time.deltaTime);
         PlayerCamera.transform.position = CalculatedCameraPosition;
 
         void MouseDeadZoneCheck()
@@ -206,16 +216,16 @@ public class CameraManager : MonoBehaviour
             {
                 if (CamMovementStatus == CameraMovementStatus.MovingToPlayerPredicated)
                 {
-                    // Get the position of the mouse and add the change of camera based on the mouse position to the cameraPositionToMoveToo.
-
+                    // Get the position of the mouse and add the change of camera based on the mouse position to the cameraPositionToMoveToo list.
+                    cameraPositionToMoveToo.Add(GetNousePositionOnScreenToWorld(mouseInViewPortSpace));
                 }
                 else if (CamMovementStatus == CameraMovementStatus.Centered)
                 {
                     // Assigned cameraPositionToMoveToo to the current position since no change is needed from movement.
-                    cameraPositionToMoveToo = PlayerCamera.transform.position;
+                    cameraPositionToMoveToo.Add(PlayerCamera.transform.position);
 
-                    // Get the position of the mouse and add the change of camera based on the mouse position to the cameraPositionToMoveToo.
-
+                    // Get the position of the mouse and add the change of camera based on the mouse position to the cameraPositionToMoveToo list.
+                    cameraPositionToMoveToo.Add(GetNousePositionOnScreenToWorld(mouseInViewPortSpace));
                 }
             }
             else
@@ -227,9 +237,27 @@ public class CameraManager : MonoBehaviour
                 else if (CamMovementStatus == CameraMovementStatus.Centered)
                 {
                     // Assigned cameraPositionToMoveToo to the current position since no change is needed when the camera is centered.
-                    cameraPositionToMoveToo = PlayerCamera.transform.position;
+                    cameraPositionToMoveToo.Add(PlayerCamera.transform.position);
                 }
             }
+        }
+
+        Vector3 GetNousePositionOnScreenToWorld(Vector2 mousePositionViewPort)
+        {
+            Vector3 mousePositionInWorldSpace = Vector3.zero;
+
+            // Taking the Y position of the current camera as the Y point.
+            mousePositionInWorldSpace.y = PlayerCamera.transform.position.y;
+
+            // X and Z.
+            Ray cameraRay = PlayerCamera.ViewportPointToRay(mousePositionViewPort);
+            Vector3 pointFromRay = cameraRay.GetPoint(Vector3.Distance(PlayerCamera.transform.position, AssignedTarget.transform.position));
+
+            // Need to add the camera positional offset values as the point being used was from the ground level, not the camera level.
+            mousePositionInWorldSpace.x = pointFromRay.x + CameraPositionalOffset.x;
+            mousePositionInWorldSpace.z = pointFromRay.z + CameraPositionalOffset.z;
+
+            return mousePositionInWorldSpace;
         }
     }
 
@@ -252,12 +280,10 @@ public class CameraManager : MonoBehaviour
 
         if (mousePositionViewPort.x > (viewPortCentre + MouseDeadZoneFromVirewPortCentre) || mousePositionViewPort.y > (viewPortCentre + MouseDeadZoneFromVirewPortCentre) || mousePositionViewPort.x < (viewPortCentre - MouseDeadZoneFromVirewPortCentre) || mousePositionViewPort.y < (viewPortCentre - MouseDeadZoneFromVirewPortCentre))
         {
-            Debug.Log("Out the deadzone bounds");
             return true;
         }
         else
         {
-            Debug.Log("In the deadzone bounds");
             return false;
         }
     }
