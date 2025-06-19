@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     [field: SerializeField, Header("Camera and Target")]
     public Camera PlayerCamera
-    {  get; private set; }
+    { get; private set; }
 
     /// <summary>
     /// The gameobject that is assigned to the camera as the target to follow.
@@ -57,13 +57,39 @@ public class CameraManager : MonoBehaviour
     public float DistanceToStopLerp
     { get; private set; } = 0.1f;
 
+    /// <summary>
+    /// The distance the camera should move infront of the player in their projected direction of movement.
+    /// </summary>
     [field: SerializeField]
     public float ProjectedLerpDistanceFromPlayerMovement
     { get; private set; } = 5.0f;
 
-    public CameraMovementStatus CamMovementStatus
-    {  get; private set; }
+    /// <summary>
+    /// The deadzone that the mouse should be from the centre viewport before the mouse influences camera position.
+    /// </summary>
+    [field: SerializeField]
+    public float MouseDeadZoneFromVirewPortCentre
+    { get; private set; }
 
+    /// <summary>
+    /// The maximum distance from the CalculatedCameraPositiion position the camera will move away from.
+    /// </summary>
+    [field: SerializeField]
+    public float MouseCameraMaximumDistance
+    { get; private set; }
+
+    public CameraMovementStatus CamMovementStatus
+    { get; private set; }
+
+    /// <summary>
+    /// Used to store the CalculatedCameraPosition and to be assigned to the Camera Transform Position at the end of the update loop.
+    /// </summary>
+    public Vector3 CalculatedCameraPosition
+    { get; private set; }
+
+    /// <summary>
+    /// The sub-state for the camera
+    /// </summary>
     public enum CameraMovementStatus
     {
         Centered,
@@ -97,9 +123,9 @@ public class CameraManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        PlayerCamera.transform.position = AssignedTarget.transform.position + CameraPositionalOffset;
-
         CamMovementStatus = CameraMovementStatus.Centered;
+
+        CalculatedCameraPosition = AssignedTarget.transform.position + CameraPositionalOffset;
     }
 
     // Update is called once per frame
@@ -115,16 +141,21 @@ public class CameraManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Keep the cameras position updated relative to the assigned targets position.
+    /// Keep the cameras position updated relative to the assigned targets position and projected path.
     /// </summary>
     public void UpdateCameraPosition()
     {
+        // The Vector3 position that the MoveTowards is to be assigend to is referenced here before being assigned to CalculatedCameraPosition.
+        Vector3 cameraPositionToMoveToo = Vector3.zero;
+
         Vector3 playerViewportPosition = PlayerCamera.WorldToViewportPoint(AssignedTarget.transform.position);
 
         // Should be in this state when the player is not moving.
         if (CamMovementStatus == CameraMovementStatus.Centered)
         {
             float viewportCentre = 0.5f;
+
+            MouseDeadZoneCheck();
 
             // If the player is outside the bounds of the given viewport view bounds, then change the camera movement status to moving towards the player.
             if (playerViewportPosition.x > (viewportCentre + Viewport_CentreDistanceToLerp) || playerViewportPosition.x < (viewportCentre - Viewport_CentreDistanceToLerp) || playerViewportPosition.y > (viewportCentre + Viewport_CentreDistanceToLerp) || playerViewportPosition.y < (viewportCentre - Viewport_CentreDistanceToLerp))
@@ -143,8 +174,10 @@ public class CameraManager : MonoBehaviour
             // The position infront of the player for the camera to move towards.
             Vector3 projectedTargetPosition = AssignedTarget.transform.position + (targetDirectionOfMovement * ProjectedLerpDistanceFromPlayerMovement);
 
-            PlayerCamera.transform.position = Vector3.MoveTowards(PlayerCamera.transform.position, projectedTargetPosition + CameraPositionalOffset, CameraLerpSpeed * Time.deltaTime);
+            // Update the calculated camera position to the current lerped positions between thw cameras current position and the projected target position.
+            cameraPositionToMoveToo = projectedTargetPosition + CameraPositionalOffset;
 
+            MouseDeadZoneCheck();
 
             // The camera only resets to the centered type movement when the player has stopped moving.
             bool hasPlayerStoppedMoving = LastFrameTargetPosition == AssignedTarget.transform.position;
@@ -160,6 +193,44 @@ public class CameraManager : MonoBehaviour
                 LastFrameTargetPosition = AssignedTarget.transform.position;
             }
         }
+
+        // Calculate the new camera position and then assigned the PlayerCamera to that position.
+        CalculatedCameraPosition = Vector3.MoveTowards(PlayerCamera.transform.position, cameraPositionToMoveToo, CameraLerpSpeed * Time.deltaTime);
+        PlayerCamera.transform.position = CalculatedCameraPosition;
+
+        void MouseDeadZoneCheck()
+        {
+            bool isMouseOutsideDeadzone = IsMouseOutsideDeadZone(out Vector2 mouseInViewPortSpace);
+
+            if (isMouseOutsideDeadzone)
+            {
+                if (CamMovementStatus == CameraMovementStatus.MovingToPlayerPredicated)
+                {
+                    // Get the position of the mouse and add the change of camera based on the mouse position to the cameraPositionToMoveToo.
+
+                }
+                else if (CamMovementStatus == CameraMovementStatus.Centered)
+                {
+                    // Assigned cameraPositionToMoveToo to the current position since no change is needed from movement.
+                    cameraPositionToMoveToo = PlayerCamera.transform.position;
+
+                    // Get the position of the mouse and add the change of camera based on the mouse position to the cameraPositionToMoveToo.
+
+                }
+            }
+            else
+            {
+                if (CamMovementStatus == CameraMovementStatus.MovingToPlayerPredicated)
+                {
+                    // Already calculated cameraPositionToMoveToo so no action needed.
+                }
+                else if (CamMovementStatus == CameraMovementStatus.Centered)
+                {
+                    // Assigned cameraPositionToMoveToo to the current position since no change is needed when the camera is centered.
+                    cameraPositionToMoveToo = PlayerCamera.transform.position;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -170,6 +241,24 @@ public class CameraManager : MonoBehaviour
         if (PlayerCamera.transform.rotation.eulerAngles != CameraRotation)
         {
             PlayerCamera.transform.rotation = Quaternion.Euler(CameraRotation);
+        }
+    }
+
+    public bool IsMouseOutsideDeadZone(out Vector2 mousePositionViewPort)
+    {
+        float viewPortCentre = 0.5f;
+
+        mousePositionViewPort = PlayerCamera.ScreenToViewportPoint(Input.mousePosition);
+
+        if (mousePositionViewPort.x > (viewPortCentre + MouseDeadZoneFromVirewPortCentre) || mousePositionViewPort.y > (viewPortCentre + MouseDeadZoneFromVirewPortCentre) || mousePositionViewPort.x < (viewPortCentre - MouseDeadZoneFromVirewPortCentre) || mousePositionViewPort.y < (viewPortCentre - MouseDeadZoneFromVirewPortCentre))
+        {
+            Debug.Log("Out the deadzone bounds");
+            return true;
+        }
+        else
+        {
+            Debug.Log("In the deadzone bounds");
+            return false;
         }
     }
 }

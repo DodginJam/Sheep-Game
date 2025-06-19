@@ -52,3 +52,5 @@ MonoBehaviour:
   <Viewport_CentreDistanceToLerp>k__BackingField: 0.125
   <DistanceToStopLerp>k__BackingField: 0.01
   <ProjectedLerpDistanceFromPlayerMovement>k__BackingField: 5
+  <MouseDeadZoneFromVirewPortCentre>k__BackingField: 0.1
+  <MouseCameraMaximumDistance>k__BackingField: 5
