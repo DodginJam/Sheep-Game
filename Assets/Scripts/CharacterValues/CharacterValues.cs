@@ -1,14 +1,35 @@
-using System;
 using UnityEngine;
 
-[Serializable]
 public class CharacterValues : MonoBehaviour
 {
-    [field: SerializeField]
-    public float BaseMovementSpeed
-    { get; set; } = 5.0f;
+    public float MovementSpeed
+    { get; private set; }
 
     [field: SerializeField]
-    public float BaseRotationSpeed
-    { get; set; } = 5.0f;
+    public ControlValues StartingControllerValues
+    { get; private set; }
+
+    private void Awake()
+    {
+        if (StartingControllerValues != null)
+        {
+            MovementSpeed = StartingControllerValues.MovementSpeed;
+        }
+        else
+        {
+            Debug.LogError("No StartingControllerValues have been assigned.");
+        }
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }
