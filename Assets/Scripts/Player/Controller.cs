@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public abstract class Controller : MonoBehaviour, ICharacterController
 {
-    [field: SerializeField]
-    public InputHandler InputHandler
-    { get; private set; }
+    public ICharacterInput InputInterface
+    { get; set; }
 
     [field: SerializeField]
     public CharacterController CharacterController
@@ -54,14 +53,13 @@ public class PlayerController : MonoBehaviour
     public LayerMask WalkableLayers
     { get; private set; }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Awake()
     {
-        
+        Initialise();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         HandleMovement(CharacterValues);
 
@@ -72,6 +70,19 @@ public class PlayerController : MonoBehaviour
         CharacterController.Move(CharacterMovementVelocity + (CharacterForcesVelocity * Time.deltaTime));
     }
 
+    public virtual void Initialise()
+    {
+        if (this.TryGetComponent<ICharacterInput>(out ICharacterInput characterInput))
+        {
+            InputInterface = characterInput;
+            Debug.Log("Input system found.");
+        }
+        else
+        {
+            Debug.LogError("Unable to locate character input system.");
+        }
+    }
+
     /// <summary>
     /// Applies the movement inputs to the desired movement directions of the character controller and store this movement in the Values Movement Velocity.
     /// </summary>
@@ -80,15 +91,15 @@ public class PlayerController : MonoBehaviour
         // Reset the movement velocity so the new inputs override the last inputs.
         CharacterMovementVelocity = Vector3.zero;
 
-        if (CharacterController != null & InputHandler != null)
+        if (CharacterController != null && InputInterface != null)
         {
-            if (InputHandler.MovementInput.x == 0 && InputHandler.MovementInput.y == 0)
+            if (InputInterface.MovementInput.x == 0 && InputInterface.MovementInput.y == 0)
             {
                 return;
             }
 
             // Only output the X and Z axis of movement, taken from the Vector2 of the input movement.
-            Vector3 globalMovement = new Vector3(InputHandler.MovementInput.x, 0, InputHandler.MovementInput.y);
+            Vector3 globalMovement = new Vector3(InputInterface.MovementInput.x, 0, InputInterface.MovementInput.y);
 
             // Move the character along global movement lines.
             CharacterMovementVelocity = characterValues.MovementSpeed * Time.deltaTime * globalMovement;
