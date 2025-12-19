@@ -96,6 +96,8 @@ public class InputHandler_AI : InputHandler
             }
             else
             {
+                // FIX NEEDED - currently the direction is calculated in 3D space, yet the movement input is taken as 2D value - Y coordinate being dropped means loss of input values.
+
                 // Find the direction to the next path corner in the index and assign that direction to movement input.
                 Vector3 directionOfMovement = (path.corners[currentPathTargetIndex] - transform.position);
 
