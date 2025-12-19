@@ -106,7 +106,7 @@ public class InputHandler_AI : InputHandler
                 Debug.Log(MovementInput);
 
                 // Check if the distance to the next corner is less then minimum distance to allow change in the current path target via increasing the index.
-                if (Vector3.Distance(transform.position, path.corners[currentPathTargetIndex]) < 0.1f)
+                if (Vector3.Distance(transform.position, path.corners[currentPathTargetIndex]) < 0.3f)
                 {
                     currentPathTargetIndex++;
                 }
