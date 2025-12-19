@@ -99,7 +99,7 @@ public abstract class Controller : MonoBehaviour, ICharacterController
             }
 
             // Only output the X and Z axis of movement, taken from the Vector2 of the input movement.
-            Vector3 globalMovement = new Vector3(InputInterface.MovementInput.x, 0, InputInterface.MovementInput.y);
+            Vector3 globalMovement = new Vector3(InputInterface.MovementInput.x, 0, InputInterface.MovementInput.y).normalized;
 
             // Move the character along global movement lines.
             CharacterMovementVelocity = characterValues.MovementSpeed * Time.deltaTime * globalMovement;
@@ -169,9 +169,9 @@ public abstract class Controller : MonoBehaviour, ICharacterController
 
         // Debugging
            
-        Debug.DrawLine(transform.position, sphereCastOrigin, Color.red); // The origin point of the sphere cast from the transform centre.
-        Debug.DrawLine(sphereCastOrigin, sphereCastOrigin + Vector3.down * sphereCastMaxDistance, Color.blue); // The sphere origin to sphere max DistanceMax.
-        Debug.Log($"Is Grounded: {isGrounded}");
+        // Debug.DrawLine(transform.position, sphereCastOrigin, Color.red); // The origin point of the sphere cast from the transform centre.
+        // Debug.DrawLine(sphereCastOrigin, sphereCastOrigin + Vector3.down * sphereCastMaxDistance, Color.blue); // The sphere origin to sphere max DistanceMax.
+        // Debug.Log($"Is Grounded: {isGrounded}");
         
     }
 }
