@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Derived input handler focused on providing support for player (real) inputs.
+/// </summary>
 public class InputHandler_Player : InputHandler
 {
     public InputManager InputManager

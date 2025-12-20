@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Derived input handler focused on providing support for AI character inputs.
+/// </summary>
 public class InputHandler_AI : InputHandler
 {
     protected override void Awake()

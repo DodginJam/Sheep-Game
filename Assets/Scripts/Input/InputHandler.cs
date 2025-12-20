@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Reads and controls the input of a character.
+/// </summary>
 public abstract class InputHandler : MonoBehaviour, ICharacterInput
 {
     public Vector2 MovementInput

@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9dfbd7709ba34747a3dc4882f2481a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <StartingControllerValues>k__BackingField: {fileID: 11400000, guid: 8504fa819fe6b4449ab8a610d78f91c4, type: 2}
+  <StartingControllerValues>k__BackingField: {fileID: 11400000, guid: 584c3008501af2142b8d81947fbc534a, type: 2}
 --- !u!114 &1625886862381409245
 MonoBehaviour:
   m_ObjectHideFlags: 0

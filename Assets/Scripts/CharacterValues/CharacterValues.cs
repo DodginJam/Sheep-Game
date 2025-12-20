@@ -1,23 +1,23 @@
 using UnityEngine;
 
-public class CharacterValues : MonoBehaviour
+public class CharacterValues : MonoBehaviour, IMovementValues
 {
     public float MovementSpeed
-    { get; private set; }
+    { get; set; }
 
     [field: SerializeField]
-    public ControlValues StartingControllerValues
+    public CharacterInitialData DefaultControllerValues
     { get; private set; }
 
     private void Awake()
     {
-        if (StartingControllerValues != null)
+        if (DefaultControllerValues != null)
         {
-            MovementSpeed = StartingControllerValues.MovementSpeed;
+            IMovementValues.ApplyData(DefaultControllerValues.MovementData, this);
         }
         else
         {
-            Debug.LogError("No StartingControllerValues have been assigned.");
+            Debug.LogError("No DefaultControllerValues have been assigned.");
         }
     }
 
