@@ -18,15 +18,13 @@ public class InputHandler_AI : InputHandler
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(FindPlayerViaPath());
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetMovementInput();
 
-        GetLookInput();
     }
 
     protected override void OnEnable()
@@ -54,16 +52,17 @@ public class InputHandler_AI : InputHandler
 
     }
 
-    public override void GetMovementInput()
+    public override void AssignMovementInput(Vector2 movementInput)
     {
-        new NotImplementedException("Movement Not Yet Implemented");
+        MovementInput = movementInput;
     }
 
-    public override void GetLookInput()
+    public override void AssignLookInput(Vector2 lookInput)
     {
-        new NotImplementedException("Look Not Yet Implemented");
+        LookInput = lookInput;
     }
 
+    [Obsolete]
     public IEnumerator FindPlayerViaPath()
     {
         bool playerLocationReached = false;

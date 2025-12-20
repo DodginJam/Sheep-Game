@@ -27,9 +27,9 @@ public class InputHandler_Player : InputHandler
     // Update is called once per frame
     void Update()
     {
-        GetMovementInput();
+        AssignMovementInput(PlayerActionMap.Move.ReadValue<Vector2>());
 
-        GetLookInput();
+        AssignLookInput(PlayerActionMap.Look.ReadValue<Vector2>());
     }
 
     protected override void OnEnable()
@@ -66,23 +66,13 @@ public class InputHandler_Player : InputHandler
         }
     }
 
-    protected Vector2 ReadMovementInput()
+    public override void AssignMovementInput(Vector2 movementInput)
     {
-        return PlayerActionMap.Move.ReadValue<Vector2>();
+        MovementInput = movementInput;
     }
 
-    protected Vector2 ReadLookInput()
+    public override void AssignLookInput(Vector2 lookInput)
     {
-        return PlayerActionMap.Look.ReadValue<Vector2>();
-    }
-
-    public override void GetMovementInput()
-    {
-        MovementInput = ReadMovementInput();
-    }
-
-    public override void GetLookInput()
-    {
-        LookInput = ReadLookInput();
+        LookInput = lookInput;
     }
 }

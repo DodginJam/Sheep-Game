@@ -10,7 +10,7 @@ public class MovementState : BaseState
 
     public override void OnUpdate(StateManager stateManager)
     {
-        if (stateManager.Controller.InputInterface.MovementInput.sqrMagnitude < 0.01f && stateManager.Controller.InputInterface.MovementInput.sqrMagnitude > -0.01f)
+        if (stateManager.Controller.InputInterface.MovementInput.sqrMagnitude < 0.001f)
         {
             stateManager.SwitchState(stateManager.IdleState);
             return;

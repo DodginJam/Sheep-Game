@@ -24,6 +24,9 @@ public class StateManager : MonoBehaviour
     public Controller Controller
     { get; private set; }
 
+    public Transform TargetTransform
+    { get; set; }
+
     public void Awake()
     {
         Initialise();

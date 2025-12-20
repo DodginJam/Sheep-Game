@@ -32,7 +32,7 @@ public abstract class InputHandler : MonoBehaviour, ICharacterInput
 
     protected abstract void DisableListeners();
 
-    public abstract void GetMovementInput();
+    public abstract void AssignMovementInput(Vector2 movementInput);
 
-    public abstract void GetLookInput();
+    public abstract void AssignLookInput(Vector2 lookInput);
 }
