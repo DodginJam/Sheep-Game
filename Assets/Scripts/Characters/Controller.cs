@@ -13,6 +13,10 @@ public abstract class Controller : MonoBehaviour, ICharacterController
     public CharacterValues CharacterValues
     { get; private set; }
 
+    [field: SerializeField]
+    public StateManager StateManager
+    { get; private set; }
+
     /// <summary>
     /// Contains the velocity calculated from the movement inputs, which is applied to the character controllers overall movement per frame.
     /// </summary>

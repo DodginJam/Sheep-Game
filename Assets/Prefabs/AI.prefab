@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 8427152667997376235}
   - component: {fileID: 7814718033579102788}
   - component: {fileID: 6150361588299639377}
+  - component: {fileID: 502877542472745822}
   - component: {fileID: 4138572148162075754}
   - component: {fileID: 1625886862381409245}
   - component: {fileID: 7877767354851182503}
@@ -139,9 +140,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CharacterController>k__BackingField: {fileID: 8427152667997376235}
   <CharacterValues>k__BackingField: {fileID: 4138572148162075754}
+  <StateManager>k__BackingField: {fileID: 502877542472745822}
   <WalkableLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &502877542472745822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371723893342332448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5899b00a59161754cae58c2733a2ce54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IdleState>k__BackingField: {fileID: 11400000, guid: 6d4c7425961dd4a4db97090d75a125ef, type: 2}
+  <WalkingState>k__BackingField: {fileID: 11400000, guid: 3a534dfa6d28f89498c7d49a38f532f1, type: 2}
+  <Controller>k__BackingField: {fileID: 6150361588299639377}
 --- !u!114 &4138572148162075754
 MonoBehaviour:
   m_ObjectHideFlags: 0
