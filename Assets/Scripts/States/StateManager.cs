@@ -15,7 +15,7 @@ public class StateManager : MonoBehaviour
     { get; private set; }
 
     [field: SerializeField]
-    public MovementState WalkingState
+    public MovementState MovementState
     { get; private set; }
 
     #endregion

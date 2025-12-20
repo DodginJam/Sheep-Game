@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IdleState>k__BackingField: {fileID: 11400000, guid: 6d4c7425961dd4a4db97090d75a125ef, type: 2}
-  <WalkingState>k__BackingField: {fileID: 11400000, guid: 3a534dfa6d28f89498c7d49a38f532f1, type: 2}
+  <MovementState>k__BackingField: {fileID: 11400000, guid: 3a534dfa6d28f89498c7d49a38f532f1, type: 2}
   <Controller>k__BackingField: {fileID: 1687007623834363311}
 --- !u!114 &5643411135871675573
 MonoBehaviour:
@@ -164,6 +164,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   <InputHandler>k__BackingField: {fileID: 876845044015921854}
   <Controller>k__BackingField: {fileID: 1687007623834363311}
+  <StateManager>k__BackingField: {fileID: 4135877742088029802}
 --- !u!114 &6733589103559472536
 MonoBehaviour:
   m_ObjectHideFlags: 0

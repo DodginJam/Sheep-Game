@@ -11,6 +11,10 @@ public abstract class ControllerNetwork : NetworkBehaviour
     public Controller Controller
     { get; set; }
 
+    [field: SerializeField]
+    public StateManager StateManager
+    { get; set; }
+
     #region Ticks
     public const float UpdateFromServerToClientTickRate = 0.05f;
 

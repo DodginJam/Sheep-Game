@@ -34,11 +34,13 @@ public class ControllerNetwork_Player : ControllerNetwork
         {
             InputHandler.enabled = false;
             Controller.enabled = false;
+            StateManager.enabled = false;
 
             // For the players, only the controller should be active on the sever, while the input is active on the clients only.
             if (IsServer)
             {
                 Controller.enabled = true;
+                StateManager.enabled = true;
             }
 
             if (IsOwner)

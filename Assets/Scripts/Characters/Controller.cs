@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Controller : MonoBehaviour, ICharacterController
@@ -65,8 +66,6 @@ public abstract class Controller : MonoBehaviour, ICharacterController
     // Update is called once per frame
     protected virtual void Update()
     {
-        HandleMovement(CharacterValues);
-
         UpdateGroundedStatus();
 
         SimulateGravity();
@@ -90,7 +89,8 @@ public abstract class Controller : MonoBehaviour, ICharacterController
     /// <summary>
     /// Applies the movement inputs to the desired movement directions of the character controller and store this movement in the Values Movement Velocity.
     /// </summary>
-    public void HandleMovement(CharacterValues characterValues)
+    [Obsolete]
+    void HandleMovement(CharacterValues characterValues)
     {
         // Reset the movement velocity so the new inputs override the last inputs.
         CharacterMovementVelocity = Vector3.zero;
@@ -117,7 +117,7 @@ public abstract class Controller : MonoBehaviour, ICharacterController
     /// <summary>
     /// Simulates the downward force to applt the character controller.
     /// </summary>
-    public void SimulateGravity()
+    void SimulateGravity()
     {
         // The bool is to flag if the player should have their gravity reset.
         bool resetGravityToZero = false;
@@ -154,7 +154,7 @@ public abstract class Controller : MonoBehaviour, ICharacterController
     /// <summary>
     /// Using SphereCasts, check if the character controller is in contact with the ground.
     /// </summary>
-    public void UpdateGroundedStatus()
+    void UpdateGroundedStatus()
     {
         float sphereCastRadius = CharacterController.radius;
         Vector3 sphereCastDirection = Vector3.down;
@@ -177,5 +177,15 @@ public abstract class Controller : MonoBehaviour, ICharacterController
         // Debug.DrawLine(sphereCastOrigin, sphereCastOrigin + Vector3.down * sphereCastMaxDistance, Color.blue); // The sphere origin to sphere max DistanceMax.
         // Debug.Log($"Is Grounded: {isGrounded}");
         
+    }
+
+    public void SetCharacterMovementVelocity(Vector3 newVelocity)
+    {
+        CharacterMovementVelocity = newVelocity;
+    }
+
+    public void SetCharacterForcesVelocity(Vector3 newVelocity)
+    {
+        CharacterForcesVelocity = newVelocity;
     }
 }

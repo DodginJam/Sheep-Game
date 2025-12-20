@@ -34,12 +34,14 @@ public class ControllerNetwork_AI : ControllerNetwork
         {
             InputHandler.enabled = false;
             Controller.enabled = false;
+            StateManager.enabled = false;
 
             // For the AI, the input and controller should only be active on the server.
             if (IsServer)
             {
                 InputHandler.enabled = true;
                 Controller.enabled = true;
+                StateManager.enabled = true;
             }
         }
     }
