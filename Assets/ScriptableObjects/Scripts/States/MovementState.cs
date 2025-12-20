@@ -16,7 +16,7 @@ public class MovementState : BaseState
             return;
         }
 
-        HandleMovement(stateManager);
+        CalculateMovementVelocity(stateManager);
     }
 
     public override void OnExit(StateManager stateManager)
@@ -26,7 +26,7 @@ public class MovementState : BaseState
         stateManager.Controller.SetCharacterMovementVelocity(Vector3.zero);
     }
 
-    protected virtual void HandleMovement(StateManager stateManager)
+    protected virtual void CalculateMovementVelocity(StateManager stateManager)
     {
         // Reset the movement velocity so the new inputs override the last inputs.
         stateManager.Controller.SetCharacterMovementVelocity(Vector3.zero);
