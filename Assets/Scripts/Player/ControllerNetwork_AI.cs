@@ -17,7 +17,14 @@ public class ControllerNetwork_AI : ControllerNetwork
         // Update the movement from the server to clients.
         if (IsServer)
         {
-            UpdatePositionToClientsRpc(transform.position);
+            UpdateFromServerToClientTickTimer += Time.deltaTime;
+
+            if (UpdateFromServerToClientTickTimer >= UpdateFromServerToClientTickRate)
+            {
+                UpdateServerPositionToClientsRpc(transform.position);
+
+                UpdateFromServerToClientTickTimer = 0;
+            }
         }
     }
 
@@ -38,7 +45,7 @@ public class ControllerNetwork_AI : ControllerNetwork
     }
 
     [Rpc(target: SendTo.NotServer)]
-    public void UpdatePositionToClientsRpc(Vector3 positionToMoveTo)
+    public void UpdateServerPositionToClientsRpc(Vector3 positionToMoveTo)
     {
         transform.position = positionToMoveTo;
     }

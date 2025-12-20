@@ -14,7 +14,7 @@ public abstract class ControllerNetwork : NetworkBehaviour
     #region Ticks
     public const float UpdateFromServerToClientTickRate = 0.05f;
 
-    public float UpdateFromServerToClientTimer
+    public float UpdateFromServerToClientTickTimer
     { get; protected set; } = 0;
 
     public const float UpdateFromClientToServerTickRate = 0.0166f;
