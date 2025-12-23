@@ -21,7 +21,7 @@ public class IdleState_AI : IdleState
 
     public override void OnUpdate(StateManager stateManager)
     {
-        Debug.Log($"Distance to Player: {Vector3.Distance(stateManager.transform.position, GameObject.FindAnyObjectByType<Controller_Player>().transform.position)}");
+        // Debug.Log($"Distance to Player: {Vector3.Distance(stateManager.transform.position, GameObject.FindAnyObjectByType<Controller_Player>().transform.position)}");
 
         Collider[] collideredItems = Physics.OverlapSphere(stateManager.transform.position, AggroDistance, TargetLayer);
 

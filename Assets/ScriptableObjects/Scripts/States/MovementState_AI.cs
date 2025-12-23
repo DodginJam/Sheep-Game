@@ -6,14 +6,11 @@ using UnityEngine.Windows;
 [CreateAssetMenu(fileName = "MovementState_AI", menuName = "Scriptable Objects/States/MovementState_AI")]
 public class MovementState_AI : MovementState
 {
-    public int CurrentPathCornerIndex
-    { get; private set; }
-
     public override void OnEnter(StateManager stateManager)
     {
         Debug.Log("Enter Movement_AI State");
 
-        CurrentPathCornerIndex = 0;
+        stateManager.CurrentPathCornerIndex = 0;
 
         if (stateManager.Controller is not IAILocomotion ai)
         {
@@ -50,11 +47,11 @@ public class MovementState_AI : MovementState
             }
 
             // Reset the current index tracking the next corner to be directed towards on new path generation.
-            CurrentPathCornerIndex = 0;
+            stateManager.CurrentPathCornerIndex = 0;
         }
 
         // If reached the end point.
-        if (Vector3.Distance(stateManager.transform.position, ai.Path.corners[ai.Path.corners.Length - 1]) < 0.5f)
+        if (Vector3.Distance(stateManager.transform.position, ai.Path.corners[ai.Path.corners.Length - 1]) < 1f)
         {
             Debug.Log("Path End reached.");
             stateManager.SwitchState(stateManager.IdleState);
@@ -65,13 +62,13 @@ public class MovementState_AI : MovementState
             // FIX NEEDED - currently the direction is calculated in 3D space, yet the movement input is taken as 2D value - Y coordinate being dropped means loss of input values.
 
             // Check if the distance to the next corner is less then minimum distance to allow change in the current path target via increasing the index.
-            if (Vector3.Distance(stateManager.transform.position, ai.Path.corners[CurrentPathCornerIndex]) < 0.3f)
+            if (Vector3.Distance(stateManager.transform.position, ai.Path.corners[stateManager.CurrentPathCornerIndex]) < 0.3f)
             {
-                CurrentPathCornerIndex++;
+                stateManager.CurrentPathCornerIndex++;
             }
 
             // Find the direction to the current target path corner in the index and assign that direction to movement input.
-            Vector3 directionOfMovement = (ai.Path.corners[CurrentPathCornerIndex] - stateManager.transform.position);
+            Vector3 directionOfMovement = (ai.Path.corners[stateManager.CurrentPathCornerIndex] - stateManager.transform.position);
             ai.AIInput.AssignMovementInput(new Vector2(directionOfMovement.x, directionOfMovement.z));
         }
 

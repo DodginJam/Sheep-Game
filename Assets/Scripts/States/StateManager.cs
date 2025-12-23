@@ -27,6 +27,9 @@ public class StateManager : MonoBehaviour
     public Transform TargetTransform
     { get; set; }
 
+    public int CurrentPathCornerIndex
+    { get; set; }
+
     public void Awake()
     {
         Initialise();
