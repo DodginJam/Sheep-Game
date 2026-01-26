@@ -1,16 +1,25 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IdleState_AI", menuName = "Scriptable Objects/States/IdleState_AI")]
 public class IdleState_AI : IdleState
 {
-    [field: SerializeField]
+    public IdleState_AI(StateManager stateManager) : base(stateManager)
+    {
+
+    }
+
     public float AggroDistance
     { get; private set; } = 10.0f;
 
-    [field: SerializeField]
     public LayerMask TargetLayer
     { get; private set; }
+
+    public override void InitialiseState(StateManager stateManager)
+    {
+        AggroDistance = stateManager.Controller.CharacterValues.DefaultControllerValues.IdleData.AggroDistance;
+
+        TargetLayer = stateManager.Controller.CharacterValues.DefaultControllerValues.IdleData.TargetLayer;
+    }
 
     public override void OnEnter(StateManager stateManager)
     {

@@ -10,11 +10,9 @@ public class StateManager : MonoBehaviour
 
     #region States
 
-    [field: SerializeField, Header("States")]
     public IdleState IdleState
     { get; private set; }
 
-    [field: SerializeField]
     public MovementState MovementState
     { get; private set; }
 
@@ -54,6 +52,17 @@ public class StateManager : MonoBehaviour
 
     void Initialise()
     {
+        if (Controller is Controller_Player controllerPlayer)
+        {
+            IdleState = new IdleState(this);
+            MovementState = new MovementState(this);
+        }
+        else if (Controller is Controller_AI controllerAI)
+        {
+            IdleState = new IdleState_AI(this);
+            MovementState = new MovementState_AI(this);
+        }
+
         if (IdleState == null)
         {
             Debug.LogError("The Idle state has not been assigned.");

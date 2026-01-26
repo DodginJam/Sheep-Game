@@ -1,9 +1,18 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IdleState", menuName = "Scriptable Objects/States/IdleState")]
 public class IdleState : BaseState
 {
+    public IdleState(StateManager stateManager) : base(stateManager)
+    {
+
+    }
+
+    public override void InitialiseState(StateManager stateManager)
+    {
+
+    }
+
     public override void OnEnter(StateManager stateManager)
     {
         Debug.Log("Enter Idle State");

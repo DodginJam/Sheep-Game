@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fe5fbc86b818840b842057773e302f, type: 3}
   m_Name: CharacterInitialData
   m_EditorClassIdentifier: 
+  <IdleData>k__BackingField: {fileID: 11400000, guid: f608b2e5d902eb743978c51b2e63c584, type: 2}
   <MovementData>k__BackingField: {fileID: 11400000, guid: 0e7d1af109871da42a40fd730fce00b7, type: 2}

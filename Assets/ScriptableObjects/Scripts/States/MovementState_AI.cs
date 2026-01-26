@@ -1,11 +1,19 @@
 using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Windows;
 
-[CreateAssetMenu(fileName = "MovementState_AI", menuName = "Scriptable Objects/States/MovementState_AI")]
 public class MovementState_AI : MovementState
 {
+    public MovementState_AI(StateManager stateManager) : base(stateManager)
+    {
+
+    }
+
+    public override void InitialiseState(StateManager stateManager)
+    {
+
+    }
+
     public override void OnEnter(StateManager stateManager)
     {
         Debug.Log("Enter Movement_AI State");

@@ -1,8 +1,17 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MovementState", menuName = "Scriptable Objects/States/MovementState")]
 public class MovementState : BaseState
 {
+    public MovementState(StateManager stateManager) : base(stateManager)
+    {
+
+    }
+
+    public override void InitialiseState(StateManager stateManager)
+    {
+
+    }
+
     public override void OnEnter(StateManager stateManager)
     {
         Debug.Log("Enter Movement State");
