@@ -14,7 +14,7 @@ public class MovementState : BaseState
 
     public override void OnEnter(StateManager stateManager)
     {
-        Debug.Log("Enter Movement State");
+        // Debug.Log("Enter Movement State");
     }
 
     public override void OnUpdate(StateManager stateManager)
@@ -30,7 +30,7 @@ public class MovementState : BaseState
 
     public override void OnExit(StateManager stateManager)
     {
-        Debug.Log("Exit Movement State");
+        // Debug.Log("Exit Movement State");
 
         stateManager.Controller.SetCharacterMovementVelocity(Vector3.zero);
     }

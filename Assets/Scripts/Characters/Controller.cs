@@ -18,6 +18,9 @@ public abstract class Controller : MonoBehaviour, ICharacterController
     public StateManager StateManager
     { get; private set; }
 
+    public CameraManager CameraManager 
+    { get; set; }
+
     /// <summary>
     /// Contains the velocity calculated from the movement inputs, which is applied to the character controllers overall movement per frame.
     /// </summary>
@@ -61,6 +64,11 @@ public abstract class Controller : MonoBehaviour, ICharacterController
     protected virtual void Awake()
     {
         Initialise();
+    }
+
+    protected virtual void Start()
+    {
+
     }
 
     // Update is called once per frame

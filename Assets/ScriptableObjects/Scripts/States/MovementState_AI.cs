@@ -16,7 +16,7 @@ public class MovementState_AI : MovementState
 
     public override void OnEnter(StateManager stateManager)
     {
-        Debug.Log("Enter Movement_AI State");
+        // Debug.Log("Enter Movement_AI State");
 
         stateManager.CurrentPathCornerIndex = 0;
 
@@ -85,7 +85,7 @@ public class MovementState_AI : MovementState
 
     public override void OnExit(StateManager stateManager)
     {
-        Debug.Log("Exit Movement_AI State");
+        // Debug.Log("Exit Movement_AI State");
 
         stateManager.Controller.SetCharacterMovementVelocity(Vector3.zero);
 

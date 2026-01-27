@@ -23,7 +23,7 @@ public class IdleState_AI : IdleState
 
     public override void OnEnter(StateManager stateManager)
     {
-        Debug.Log("Enter IdleState_AI State");
+        // Debug.Log("Enter IdleState_AI State");
 
         stateManager.Controller.SetCharacterMovementVelocity(Vector3.zero);
     }
@@ -53,6 +53,6 @@ public class IdleState_AI : IdleState
 
     public override void OnExit(StateManager stateManager)
     {
-        Debug.Log("Exit IdleState_AI State");
+        // Debug.Log("Exit IdleState_AI State");
     }
 }

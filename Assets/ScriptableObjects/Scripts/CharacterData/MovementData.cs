@@ -5,5 +5,5 @@ public class MovementData : ScriptableObject, IMovementValues
 {
     [field: SerializeField]
     public float MovementSpeed
-    { get; set; }
+    { get; set; } = 5.0f;
 }

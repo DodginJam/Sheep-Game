@@ -15,7 +15,7 @@ public class IdleState : BaseState
 
     public override void OnEnter(StateManager stateManager)
     {
-        Debug.Log("Enter Idle State");
+        // Debug.Log("Enter Idle State");
 
         stateManager.Controller.SetCharacterMovementVelocity(Vector3.zero);
     }
@@ -33,6 +33,6 @@ public class IdleState : BaseState
 
     public override void OnExit(StateManager stateManager)
     {
-        Debug.Log("Exit Idle State");
+        // Debug.Log("Exit Idle State");
     }
 }

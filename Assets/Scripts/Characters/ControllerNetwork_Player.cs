@@ -46,6 +46,9 @@ public class ControllerNetwork_Player : ControllerNetwork
             if (IsOwner)
             {
                 InputHandler.enabled = true;
+
+                // Assign the current owner to the camera manager.
+                GameObject.FindAnyObjectByType<CameraManager>().AssignOwner(Controller);
             }
         }
     }
